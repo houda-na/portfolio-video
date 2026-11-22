@@ -61,16 +61,16 @@ section.client { padding:56px 0 18px; }
 .chead .count { font-size:13px; font-weight:600; color:var(--muted); white-space:nowrap; }
 .reel { display:flex; gap:20px; overflow-x:auto; padding:6px 2px 26px; scroll-snap-type:x mandatory; scrollbar-width:thin; scrollbar-color:var(--accent) transparent; }
 .card { flex:none; scroll-snap-align:start; text-align:left; }
-.card .frame { position:relative; overflow:hidden; border-radius:22px; background:#000; box-shadow:var(--shadow); transition:transform .35s cubic-bezier(.2,.8,.2,1); }
+.card .frame { position:relative; overflow:hidden; border-radius:22px; background:#000; box-shadow:var(--shadow); }
 .card.v .frame { width:236px; aspect-ratio:9/16; }
 .card.s .frame { width:300px; aspect-ratio:4/5; }
 .card.h .frame { width:520px; aspect-ratio:16/9; }
-.card:hover .frame { transform:translateY(-6px) rotate(-.6deg); }
+
 .card img, .card video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 .card video { opacity:0; transition:opacity .3s; }
 .card.preview video { opacity:1; }
 .card .play { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:64px; height:64px; border-radius:50%; background:var(--accent); color:var(--accent-ink); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(0,0,0,.35); transition:transform .25s, opacity .25s; }
-.card:hover .play { transform:translate(-50%,-50%) scale(1.1); }
+.card:hover .play { background:var(--ink); }
 .card.preview .play { opacity:0; }
 .card .play svg { width:22px; height:22px; margin-left:3px; }
 .card .dur { position:absolute; right:12px; top:12px; background:rgba(0,0,0,.55); color:#fff; font-size:11.5px; font-weight:700; padding:4px 9px; border-radius:99px; backdrop-filter:blur(4px); }
@@ -251,9 +251,6 @@ function bindCards(){
   document.querySelectorAll(".card").forEach(card => {
     const vid = card.querySelector("video");
     // aperçu muet au survol (ordinateur uniquement)
-    card.addEventListener("mouseenter", () => { if (!matchMedia("(hover:hover)").matches) return;
-      if (!vid.src) vid.src = vid.dataset.src; vid.currentTime = 0; vid.play().then(()=>card.classList.add("preview")).catch(()=>{}); });
-    card.addEventListener("mouseleave", () => { vid.pause(); card.classList.remove("preview"); });
     card.addEventListener("click", () => openLB(ALL.findIndex(v => v.id===card.dataset.v)));
   });
   // durées
