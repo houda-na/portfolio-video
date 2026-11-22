@@ -32,15 +32,15 @@ header.top .wrap { display:flex; align-items:center; justify-content:space-betwe
 .seg svg { width:14px; height:14px; }
 
 /* héro */
-.hero { padding:64px 0 40px; display:grid; grid-template-columns:1.35fr .65fr; gap:40px; align-items:end; }
+.hero { padding-top:64px; padding-bottom:40px; display:grid; grid-template-columns:1.35fr .65fr; gap:40px; align-items:end; }
 .hero h1 { font-family:'Archivo'; font-weight:900; letter-spacing:-.045em; line-height:.86; font-size:clamp(64px, 11vw, 168px); }
 .hero h1 .script { display:block; color:var(--accent); font-size:.86em; letter-spacing:-.02em; margin-top:-.02em; }
 .hero p.lead { margin-top:26px; max-width:560px; font-size:17px; line-height:1.6; color:var(--muted); }
 .stats { display:flex; gap:34px; margin-top:30px; flex-wrap:wrap; }
 .stats div b { display:block; font-family:'Archivo'; font-weight:900; font-size:44px; letter-spacing:-.04em; color:var(--accent); line-height:1; }
 .stats div span { font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
-.arch { justify-self:end; width:100%; max-width:330px; aspect-ratio:3/4; border-radius:999px 999px 26px 26px; overflow:hidden; background:var(--soft); box-shadow:var(--shadow); position:relative; }
-.arch img { width:100%; height:100%; object-fit:cover; object-position:50% 25%; }
+.arch { justify-self:end; width:100%; max-width:320px; aspect-ratio:1/1; border-radius:50%; overflow:hidden; background:var(--soft); position:relative; box-shadow:0 0 0 10px var(--bg), 0 0 0 11px var(--accent); margin:12px; }
+.arch img { width:100%; height:100%; object-fit:cover; object-position:50% 50%; }
 .arch .badge { position:absolute; left:50%; bottom:16px; transform:translateX(-50%); white-space:nowrap; background:var(--accent); color:var(--accent-ink); padding:8px 16px; border-radius:99px; font-size:12.5px; font-weight:700; display:flex; gap:8px; align-items:center; }
 .arch .badge i { width:8px; height:8px; border-radius:50%; background:currentColor; animation:pulse 1.4s infinite; }
 @keyframes pulse { 50% { opacity:.25; } }
@@ -78,6 +78,8 @@ section.client { padding:56px 0 18px; }
 .card .cap { margin-top:12px; font-weight:600; font-size:14.5px; max-width:100%; }
 .card.v .cap, .card.v .sub { width:236px; } .card.s .cap, .card.s .sub { width:300px; } .card.h .cap, .card.h .sub { width:520px; }
 .card .sub { margin-top:4px; font-size:12.5px; color:var(--muted); line-height:1.4; }
+.card .self { margin-top:12px; display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; color:var(--accent); }
+.card .self:before { content:""; width:7px; height:7px; border-radius:50%; background:var(--accent); }
 
 /* contact */
 .contact { margin:70px 0 0; padding:70px 0; border-top:1px solid var(--line); }
@@ -147,9 +149,8 @@ footer .sig { font-family:'Instrument Serif'; font-style:italic; font-size:22px;
       <div class="label" data-i="kicker"></div>
       <h1 style="margin-top:14px">Portfolio<span class="script" data-i="title2"></span></h1>
       <p class="lead" data-i="lead"></p>
-      <div class="stats" id="stats"></div>
     </div>
-    <div class="arch"><img src="photo.jpg" alt="Houda Naoui"><div class="badge"><i></i><span data-i="badge"></span></div></div>
+    <div class="arch"><img src="photo.jpg" alt="Houda Naoui"></div>
   </div>
 
   <nav class="filters"><div class="wrap" id="filters"></div></nav>
@@ -175,12 +176,12 @@ footer .sig { font-family:'Instrument Serif'; font-style:italic; font-size:22px;
 <script>
 const I18N = {
   fr: { brandsub:"Portfolio vidéo", light:"Jour", dark:"Nuit", kicker:"Reels · Motion design · IA · Tournage & montage",
-        title2:"vidéo.", lead:"Une sélection de vidéos que j'ai tournées, montées ou générées par IA pour les marques que j'accompagne. Cliquez sur une vidéo pour la regarder ici, sans quitter la page.",
-        badge:"Cliquez pour lire", all:"Toutes", videos:"vidéos", video:"vidéo", ct1:"Travaillons", ct2:"ensemble.",
+        title2:"vidéo.", lead:"Une sélection de vidéos que j'ai tournées, montées ou générées par IA pour les marques que j'accompagne.",
+        self:"Tournage et montage réalisés par moi", all:"Toutes", videos:"vidéos", video:"vidéo", ct1:"Travaillons", ct2:"ensemble.",
         stats:[["13","vidéos"],["4","marques"],["100 %","tournage & montage maison"]] },
   en: { brandsub:"Video portfolio", light:"Light", dark:"Dark", kicker:"Reels · Motion design · AI · Filming & editing",
-        title2:"in motion.", lead:"A selection of videos I filmed, edited or generated with AI for the brands I work with. Click any video to watch it right here, without leaving the page.",
-        badge:"Click to play", all:"All", videos:"videos", video:"video", ct1:"Let's work", ct2:"together.",
+        title2:"in motion.", lead:"A selection of videos I filmed, edited or generated with AI for the brands I work with.",
+        self:"Filmed and edited by me", all:"All", videos:"videos", video:"video", ct1:"Let's work", ct2:"together.",
         stats:[["13","videos"],["4","brands"],["100%","filmed & edited in-house"]] }
 };
 const CLIENTS = [
@@ -203,15 +204,15 @@ const CLIENTS = [
     videos:[
       {id:"creativity-valuebox", f:"s", tag:{fr:"IA",en:"AI"}, t:{fr:"Vidéo animée générée par IA",en:"AI-generated animated video"}, d:{fr:"Contenu pour enfants créé avec l'IA pour ValueBox Kids.",en:"Kids' content created with AI for ValueBox Kids."}},
       {id:"creativity-assilshop", f:"v", tag:{fr:"Produit",en:"Product"}, t:{fr:"Assil Shop : pack 5-en-1",en:"Assil Shop: 5-in-1 pack"}, d:{fr:"Vidéo produit pour la vente en ligne.",en:"Product video for online sales."}},
-      {id:"creativity-yenanejma", f:"v", tag:{fr:"Tournage",en:"Shoot"}, t:{fr:"Center Yena Nejma",en:"Center Yena Nejma"}, d:{fr:"Présentation du centre : tournage au smartphone et montage par mes soins.",en:"Centre tour: smartphone filming and editing by me."}},
+      {id:"creativity-yenanejma", self:true, f:"v", tag:{fr:"Tournage",en:"Shoot"}, t:{fr:"Center Yena Nejma",en:"Center Yena Nejma"}, d:{fr:"Présentation du centre : tournage au smartphone et montage par mes soins.",en:"Centre tour: smartphone filming and editing by me."}},
       {id:"creativity-tayssir", f:"v", tag:{fr:"Présentation",en:"Presentation"}, t:{fr:"Tayssir Académie",en:"Tayssir Académie"}, d:{fr:"Vidéo de présentation de l'académie.",en:"Academy presentation video."}}
     ]},
   { id:"adefegk", name:"ADEFEGK", role:{fr:"Responsable médiatisation · 2023–2025", en:"Media manager · 2023–2025"},
     text:{fr:"Vidéos d'événements de l'association étudiante, tournées au smartphone et montées par mes soins.", en:"Student association event videos, filmed on smartphone and edited by me."},
     videos:[
-      {id:"adefegk-teamday", f:"v", tag:{fr:"Événement",en:"Event"}, t:{fr:"Team Day de fin de semestre",en:"End-of-semester Team Day"}, d:{fr:"Aftermovie de la journée d'équipe.",en:"Team day aftermovie."}},
-      {id:"adefegk-caravane", f:"h", tag:{fr:"Événement",en:"Event"}, t:{fr:"Caravane humanitaire",en:"Humanitarian caravan"}, d:{fr:"Clôture de la caravane humanitaire.",en:"Closing of the humanitarian caravan."}},
-      {id:"adefegk-conference", f:"h", tag:{fr:"Conférence",en:"Conference"}, t:{fr:"Conférence Soft Skills",en:"Soft Skills conference"}, d:{fr:"Throwback de la conférence Soft Skills & Personal Development.",en:"Throwback of the Soft Skills & Personal Development conference."}}
+      {id:"adefegk-teamday", self:true, f:"v", tag:{fr:"Événement",en:"Event"}, t:{fr:"Team Day de fin de semestre",en:"End-of-semester Team Day"}, d:{fr:"Aftermovie de la journée d'équipe.",en:"Team day aftermovie."}},
+      {id:"adefegk-caravane", self:true, f:"h", tag:{fr:"Événement",en:"Event"}, t:{fr:"Caravane humanitaire",en:"Humanitarian caravan"}, d:{fr:"Clôture de la caravane humanitaire.",en:"Closing of the humanitarian caravan."}},
+      {id:"adefegk-conference", self:true, f:"h", tag:{fr:"Conférence",en:"Conference"}, t:{fr:"Conférence Soft Skills",en:"Soft Skills conference"}, d:{fr:"Throwback de la conférence Soft Skills & Personal Development.",en:"Throwback of the Soft Skills & Personal Development conference."}}
     ]}
 ];
 const ALL = CLIENTS.flatMap(c => c.videos.map(v => ({...v, client:c})));
@@ -227,20 +228,18 @@ function render(){
   document.title = (lang==="fr" ? "Portfolio vidéo" : "Video portfolio") + " — Houda Naoui";
   document.querySelectorAll("[data-i]").forEach(el => el.textContent = T[el.dataset.i]);
   document.querySelectorAll("[data-lang]").forEach(b => b.classList.toggle("on", b.dataset.lang===lang));
-  document.getElementById("stats").innerHTML = T.stats.map(([a,b]) => `<div><b>${a}</b><span>${b}</span></div>`).join("");
   document.getElementById("filters").innerHTML =
     `<button class="chip ${filter==="all"?"on":""}" data-f="all">${T.all} · ${ALL.length}</button>` +
     CLIENTS.map(c => `<button class="chip ${filter===c.id?"on":""}" data-f="${c.id}">${c.name}</button>`).join("");
   document.getElementById("sections").innerHTML = CLIENTS.filter(c => filter==="all" || filter===c.id).map((c,ci) => `
     <section class="client" id="${c.id}"><div class="wrap">
       <div class="chead"><div class="num">${String(CLIENTS.indexOf(c)+1).padStart(2,"0")}</div>
-        <div><div class="label">${c.role[lang]}</div><h2>${c.name}</h2><p>${c.text[lang]}</p></div>
-        <div class="count">${c.videos.length} ${c.videos.length>1?T.videos:T.video}</div></div>
+        <div><h2>${c.name}</h2></div></div>
       <div class="reel">${c.videos.map(v => `
         <button class="card ${v.f}" data-v="${v.id}" id="v-${v.id}">
           <div class="frame"><img src="posters/${v.id}.jpg" alt="" loading="lazy"><video muted playsinline loop preload="none" data-src="videos/${v.id}.mp4"></video>
-            <span class="tag">${v.tag[lang]}</span><span class="dur" data-dur="${v.id}"></span><span class="play">${playIcon}</span></div>
-          <div class="cap">${v.t[lang]}</div><div class="sub">${v.d[lang]}</div>
+            <span class="dur" data-dur="${v.id}"></span><span class="play">${playIcon}</span></div>
+          ${v.self ? `<div class="self">${T.self}</div>` : ""}
         </button>`).join("")}</div>
     </div></section>`).join("");
   bindCards();
@@ -271,8 +270,8 @@ function openLB(i){
   document.querySelectorAll(".card video").forEach(x => x.pause());
   lbv.src = `videos/${v.id}.mp4`; lbv.poster = `posters/${v.id}.jpg`;
   document.getElementById("lbc").textContent = v.client.name;
-  document.getElementById("lbt").textContent = v.t[lang];
-  document.getElementById("lbd").textContent = v.d[lang];
+  document.getElementById("lbt").textContent = v.self ? I18N[lang].self : "";
+  document.getElementById("lbd").textContent = "";
   document.getElementById("lbn").textContent = `${cur+1} / ${ALL.length}`;
   lb.classList.add("open"); document.body.style.overflow="hidden";
   history.replaceState(null, "", "#" + v.id);
